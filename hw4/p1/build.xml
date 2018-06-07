@@ -1,0 +1,49 @@
+<project name="Client-Server">
+
+    <target name="init">
+        <mkdir dir="out/classes"/>
+        <mkdir dir="out/dist"/>
+        <mkdir dir="doc"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="out/classes"/>
+        <javac srcdir="src" destdir="out/classes"/>
+    </target>
+
+    <target name="javadoc">
+        <javadoc sourcepath="src" destdir="doc"/>
+    </target>
+
+    <target name="dist">
+        <jar destfile="out/dist/Client.jar" basedir="out/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.defaultpackage.client.Client"/>
+            </manifest>
+        </jar>
+        <jar destfile="out/dist/Server.jar" basedir="out/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.defaultpackage.server.Server"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run-server">
+        <java jar="out/dist/Server.jar" fork="true">
+            <arg value="${arg0}"/>
+        </java>
+    </target>
+    <target name="run-client">
+        <java jar="out/dist/Client.jar" fork="true" />
+    </target>
+
+    <target name="copy">
+        <cp srcdir="doc" destdir="out/dist"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="out"/>
+        <delete dir="doc"/>
+    </target>
+
+</project>
